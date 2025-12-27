@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Z Journal default image</title>
+  <desc id="desc">Abstract gradient background with a stylized Z mark.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2b1b7d"/>
+      <stop offset="55%" stop-color="#1c2a6d"/>
+      <stop offset="100%" stop-color="#f2b37c"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.15" cy="0.2" r="0.8">
+      <stop offset="0%" stop-color="#f7d9bb" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#f7d9bb" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <rect width="1200" height="800" fill="url(#glow)"/>
+  <path
+    d="M320 210h560l-90 96c-46 48-103 102-174 162 76 22 131 50 168 86l96 96H320l98-104c46-48 104-100 174-156-78-24-137-54-178-90l-94-90Z"
+    fill="#0b0b19"
+    opacity="0.82"
+  />
+  <text x="600" y="690" text-anchor="middle" font-family="'Cormorant Garamond', 'Times New Roman', serif" font-size="44" fill="#fdf1e7" letter-spacing="8">Z JOURNAL</text>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" role="img" aria-labelledby="title desc">
+  <title id="title">Z Journal logo</title>
+  <desc id="desc">Stylized Z mark for Z Journal.</desc>
+  <defs>
+    <linearGradient id="ink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2b1b7d"/>
+      <stop offset="100%" stop-color="#0b0b19"/>
+    </linearGradient>
+  </defs>
+  <rect width="120" height="120" rx="18" fill="#f4ede6"/>
+  <path
+    d="M26 30h68l-11 12c-6 7-12 13-19 19 8 2 14 5 18 9l12 12H26l12-13c6-7 12-13 19-19-9-2-15-5-20-10l-11-10Z"
+    fill="url(#ink)"
+  />
+  <text x="60" y="102" text-anchor="middle" font-family="'Cormorant Garamond', 'Times New Roman', serif" font-size="16" letter-spacing="3" fill="#2b1b7d">JOURNAL</text>
+</svg>
