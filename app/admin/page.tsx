@@ -5,6 +5,8 @@ import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Textarea } from "../../components/ui/textarea";
 import { ImageDropzone } from "../../components/ui/image-dropzone";
+import { RichTextEditor } from "../../components/ui/rich-text-editor";
+import { Modal } from "../../components/ui/modal";
 import {
   Card,
   CardContent,
@@ -22,13 +24,15 @@ import { getImageUrl } from "../../lib/utils";
 const createId = (prefix: string) =>
   `${prefix}_${Math.random().toString(36).slice(2, 9)}`;
 
+const getToday = () => new Date().toISOString().slice(0, 10);
+
 const emptyArticle: Article = {
   id: "",
   title: "",
   dek: "",
   content: "",
   author: "",
-  date: "",
+  date: getToday(),
   category: "",
   readTime: "",
   image: ""
@@ -39,7 +43,7 @@ const emptyPodcast: Podcast = {
   title: "",
   description: "",
   host: "",
-  date: "",
+  date: getToday(),
   videoUrl: ""
 };
 
@@ -257,133 +261,27 @@ export default function AdminPage() {
 
         <TabsContent value="articles">
           <div className="grid gap-6 lg:grid-cols-[360px_1fr]">
-            {showArticleForm ? (
-              <Card>
-                <CardHeader>
-                  <CardTitle>
-                    {articleForm.id ? "Edit article" : "New article"}
-                  </CardTitle>
-                  <CardDescription>
-                    Publish the latest story or update an existing entry.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <Input
-                    placeholder="Title"
-                    value={articleForm.title}
-                    onChange={(event) =>
-                      setArticleForm({
-                        ...articleForm,
-                        title: event.target.value
-                      })
-                    }
-                  />
-                  <Input
-                    placeholder="Subtitle / dek"
-                    value={articleForm.dek}
-                    onChange={(event) =>
-                      setArticleForm({
-                        ...articleForm,
-                        dek: event.target.value
-                      })
-                    }
-                  />
-                  <Textarea
-                    placeholder="Full content"
-                    value={articleForm.content}
-                    onChange={(event) =>
-                      setArticleForm({
-                        ...articleForm,
-                        content: event.target.value
-                      })
-                    }
-                  />
-                  <Input
-                    placeholder="Author"
-                    value={articleForm.author}
-                    onChange={(event) =>
-                      setArticleForm({
-                        ...articleForm,
-                        author: event.target.value
-                      })
-                    }
-                  />
-                  <Input
-                    placeholder="Date (YYYY-MM-DD)"
-                    value={articleForm.date}
-                    onChange={(event) =>
-                      setArticleForm({
-                        ...articleForm,
-                        date: event.target.value
-                      })
-                    }
-                  />
-                  <Input
-                    placeholder="Category"
-                    value={articleForm.category}
-                    onChange={(event) =>
-                      setArticleForm({
-                        ...articleForm,
-                        category: event.target.value
-                      })
-                    }
-                  />
-                  <Input
-                    placeholder="Read time (e.g. 5 min)"
-                    value={articleForm.readTime}
-                    onChange={(event) =>
-                      setArticleForm({
-                        ...articleForm,
-                        readTime: event.target.value
-                      })
-                    }
-                  />
-                  <ImageDropzone
-                    label="Article image"
-                    value={articleForm.image}
-                    onChange={(next) =>
-                      setArticleForm({
-                        ...articleForm,
-                        image: next
-                      })
-                    }
-                  />
-                  <div className="flex flex-wrap gap-2">
-                    <Button onClick={handleArticleSubmit}>
-                      {articleForm.id ? "Save changes" : "Publish"}
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      onClick={() => {
-                        setArticleForm(emptyArticle);
-                        setShowArticleForm(false);
-                      }}
-                    >
-                      Close
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Create an article</CardTitle>
-                  <CardDescription>
-                    Start a new story or edit an existing one.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button
-                    onClick={() => {
-                      setArticleForm(emptyArticle);
-                      setShowArticleForm(true);
-                    }}
-                  >
-                    New article
-                  </Button>
-                </CardContent>
-              </Card>
-            )}
+            <Card>
+              <CardHeader>
+                <CardTitle>Create an article</CardTitle>
+                <CardDescription>
+                  Start a new story or edit an existing one.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <Button
+                  onClick={() => {
+                    setArticleForm({ ...emptyArticle, date: getToday() });
+                    setShowArticleForm(true);
+                  }}
+                >
+                  New article
+                </Button>
+                <p className="text-xs text-slate-500">
+                  Articles open in a full editor modal for more space.
+                </p>
+              </CardContent>
+            </Card>
 
             <div className="space-y-4">
               <div className="flex items-center justify-between">
@@ -394,7 +292,7 @@ export default function AdminPage() {
                   variant="outline"
                   size="sm"
                   onClick={() => {
-                    setArticleForm(emptyArticle);
+                    setArticleForm({ ...emptyArticle, date: getToday() });
                     setShowArticleForm(true);
                   }}
                 >
@@ -448,103 +346,24 @@ export default function AdminPage() {
 
         <TabsContent value="podcasts">
           <div className="grid gap-6 lg:grid-cols-[360px_1fr]">
-            {showPodcastForm ? (
-              <Card>
-                <CardHeader>
-                  <CardTitle>
-                    {podcastForm.id ? "Edit podcast" : "New podcast"}
-                  </CardTitle>
-                  <CardDescription>
-                    Add a new video podcast episode to the feed.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <Input
-                    placeholder="Title"
-                    value={podcastForm.title}
-                    onChange={(event) =>
-                      setPodcastForm({
-                        ...podcastForm,
-                        title: event.target.value
-                      })
-                    }
-                  />
-                  <Textarea
-                    placeholder="Description"
-                    value={podcastForm.description}
-                    onChange={(event) =>
-                      setPodcastForm({
-                        ...podcastForm,
-                        description: event.target.value
-                      })
-                    }
-                  />
-                  <Input
-                    placeholder="Host"
-                    value={podcastForm.host}
-                    onChange={(event) =>
-                      setPodcastForm({
-                        ...podcastForm,
-                        host: event.target.value
-                      })
-                    }
-                  />
-                  <Input
-                    placeholder="Date (YYYY-MM-DD)"
-                    value={podcastForm.date}
-                    onChange={(event) =>
-                      setPodcastForm({
-                        ...podcastForm,
-                        date: event.target.value
-                      })
-                    }
-                  />
-                  <Input
-                    placeholder="Video URL (embed)"
-                    value={podcastForm.videoUrl}
-                    onChange={(event) =>
-                      setPodcastForm({
-                        ...podcastForm,
-                        videoUrl: event.target.value
-                      })
-                    }
-                  />
-                  <div className="flex flex-wrap gap-2">
-                    <Button onClick={handlePodcastSubmit}>
-                      {podcastForm.id ? "Save changes" : "Publish"}
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      onClick={() => {
-                        setPodcastForm(emptyPodcast);
-                        setShowPodcastForm(false);
-                      }}
-                    >
-                      Close
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Create a podcast</CardTitle>
-                  <CardDescription>
-                    Start a new episode or edit an existing one.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button
-                    onClick={() => {
-                      setPodcastForm(emptyPodcast);
-                      setShowPodcastForm(true);
-                    }}
-                  >
-                    New podcast
-                  </Button>
-                </CardContent>
-              </Card>
-            )}
+            <Card>
+              <CardHeader>
+                <CardTitle>Create a podcast</CardTitle>
+                <CardDescription>
+                  Start a new episode or edit an existing one.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button
+                  onClick={() => {
+                    setPodcastForm({ ...emptyPodcast, date: getToday() });
+                    setShowPodcastForm(true);
+                  }}
+                >
+                  New podcast
+                </Button>
+              </CardContent>
+            </Card>
 
             <div className="space-y-4">
               <div className="flex items-center justify-between">
@@ -555,7 +374,7 @@ export default function AdminPage() {
                   variant="outline"
                   size="sm"
                   onClick={() => {
-                    setPodcastForm(emptyPodcast);
+                    setPodcastForm({ ...emptyPodcast, date: getToday() });
                     setShowPodcastForm(true);
                   }}
                 >
@@ -609,65 +428,24 @@ export default function AdminPage() {
 
         <TabsContent value="gallery">
           <div className="grid gap-6 lg:grid-cols-[360px_1fr]">
-            {showImageForm ? (
-              <Card>
-                <CardHeader>
-                  <CardTitle>
-                    {imageForm.id ? "Edit image" : "Add image"}
-                  </CardTitle>
-                  <CardDescription>
-                    Update the gallery with new imagery and titles.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <Input
-                    placeholder="Title"
-                    value={imageForm.title}
-                    onChange={(event) =>
-                      setImageForm({ ...imageForm, title: event.target.value })
-                    }
-                  />
-                  <ImageDropzone
-                    label="Gallery image"
-                    value={imageForm.url}
-                    onChange={(next) => setImageForm({ ...imageForm, url: next })}
-                  />
-                  <div className="flex flex-wrap gap-2">
-                    <Button onClick={handleImageSubmit}>
-                      {imageForm.id ? "Save changes" : "Add"}
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      onClick={() => {
-                        setImageForm(emptyImage);
-                        setShowImageForm(false);
-                      }}
-                    >
-                      Close
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Add a gallery image</CardTitle>
-                  <CardDescription>
-                    Highlight new visuals or update existing ones.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button
-                    onClick={() => {
-                      setImageForm(emptyImage);
-                      setShowImageForm(true);
-                    }}
-                  >
-                    New image
-                  </Button>
-                </CardContent>
-              </Card>
-            )}
+            <Card>
+              <CardHeader>
+                <CardTitle>Add a gallery image</CardTitle>
+                <CardDescription>
+                  Highlight new visuals or update existing ones.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button
+                  onClick={() => {
+                    setImageForm(emptyImage);
+                    setShowImageForm(true);
+                  }}
+                >
+                  New image
+                </Button>
+              </CardContent>
+            </Card>
 
             <div className="grid gap-4 md:grid-cols-2">
               <div className="col-span-full flex items-center justify-between">
@@ -731,93 +509,24 @@ export default function AdminPage() {
 
         <TabsContent value="team">
           <div className="grid gap-6 lg:grid-cols-[360px_1fr]">
-            {showEmployeeForm ? (
-              <Card>
-                <CardHeader>
-                  <CardTitle>
-                    {employeeForm.id ? "Edit employee" : "Add employee"}
-                  </CardTitle>
-                  <CardDescription>
-                    The about page updates automatically with these profiles.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <Input
-                    placeholder="Name"
-                    value={employeeForm.name}
-                    onChange={(event) =>
-                      setEmployeeForm({
-                        ...employeeForm,
-                        name: event.target.value
-                      })
-                    }
-                  />
-                  <Input
-                    placeholder="Role"
-                    value={employeeForm.role}
-                    onChange={(event) =>
-                      setEmployeeForm({
-                        ...employeeForm,
-                        role: event.target.value
-                      })
-                    }
-                  />
-                  <Textarea
-                    placeholder="Short bio"
-                    value={employeeForm.bio}
-                    onChange={(event) =>
-                      setEmployeeForm({
-                        ...employeeForm,
-                        bio: event.target.value
-                      })
-                    }
-                  />
-                  <ImageDropzone
-                    label="Employee image"
-                    value={employeeForm.image}
-                    onChange={(next) =>
-                      setEmployeeForm({
-                        ...employeeForm,
-                        image: next
-                      })
-                    }
-                  />
-                  <div className="flex flex-wrap gap-2">
-                    <Button onClick={handleEmployeeSubmit}>
-                      {employeeForm.id ? "Save changes" : "Add"}
-                    </Button>
-                    <Button
-                      variant="ghost"
-                      onClick={() => {
-                        setEmployeeForm(emptyEmployee);
-                        setShowEmployeeForm(false);
-                      }}
-                    >
-                      Close
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            ) : (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Add an employee</CardTitle>
-                  <CardDescription>
-                    Keep the about page team roster current.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Button
-                    onClick={() => {
-                      setEmployeeForm(emptyEmployee);
-                      setShowEmployeeForm(true);
-                    }}
-                  >
-                    New employee
-                  </Button>
-                </CardContent>
-              </Card>
-            )}
+            <Card>
+              <CardHeader>
+                <CardTitle>Add an employee</CardTitle>
+                <CardDescription>
+                  Keep the about page team roster current.
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button
+                  onClick={() => {
+                    setEmployeeForm(emptyEmployee);
+                    setShowEmployeeForm(true);
+                  }}
+                >
+                  New employee
+                </Button>
+              </CardContent>
+            </Card>
 
             <div className="grid gap-4 md:grid-cols-2">
               <div className="col-span-full flex items-center justify-between">
@@ -889,6 +598,302 @@ export default function AdminPage() {
           Loading content...
         </div>
       )}
+
+      <Modal
+        open={showArticleForm}
+        onClose={() => {
+          setArticleForm(emptyArticle);
+          setShowArticleForm(false);
+        }}
+        title={articleForm.id ? "Edit article" : "New article"}
+        description="Publish the latest story or update an existing entry."
+      >
+        <div className="space-y-4">
+          <Input
+            placeholder="Title"
+            value={articleForm.title}
+            onChange={(event) =>
+              setArticleForm({
+                ...articleForm,
+                title: event.target.value
+              })
+            }
+          />
+          <Input
+            placeholder="Subtitle / dek"
+            value={articleForm.dek}
+            onChange={(event) =>
+              setArticleForm({
+                ...articleForm,
+                dek: event.target.value
+              })
+            }
+          />
+          <RichTextEditor
+            placeholder="Write the full article here..."
+            value={articleForm.content}
+            onChange={(next) =>
+              setArticleForm({
+                ...articleForm,
+                content: next
+              })
+            }
+          />
+          <div className="grid gap-3 md:grid-cols-2">
+            <Input
+              placeholder="Author"
+              value={articleForm.author}
+              onChange={(event) =>
+                setArticleForm({
+                  ...articleForm,
+                  author: event.target.value
+                })
+              }
+            />
+            <Input
+              placeholder="Date (YYYY-MM-DD)"
+              type="date"
+              value={articleForm.date}
+              onChange={(event) =>
+                setArticleForm({
+                  ...articleForm,
+                  date: event.target.value
+                })
+              }
+            />
+            <Input
+              placeholder="Category"
+              value={articleForm.category}
+              onChange={(event) =>
+                setArticleForm({
+                  ...articleForm,
+                  category: event.target.value
+                })
+              }
+            />
+            <Input
+              placeholder="Read time (e.g. 5 min)"
+              value={articleForm.readTime}
+              onChange={(event) =>
+                setArticleForm({
+                  ...articleForm,
+                  readTime: event.target.value
+                })
+              }
+            />
+          </div>
+          <ImageDropzone
+            label="Article image"
+            value={articleForm.image}
+            onChange={(next) =>
+              setArticleForm({
+                ...articleForm,
+                image: next
+              })
+            }
+          />
+          <div className="flex flex-wrap gap-2">
+            <Button onClick={handleArticleSubmit}>
+              {articleForm.id ? "Save changes" : "Publish"}
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => {
+                setArticleForm(emptyArticle);
+                setShowArticleForm(false);
+              }}
+            >
+              Close
+            </Button>
+          </div>
+        </div>
+      </Modal>
+
+      <Modal
+        open={showPodcastForm}
+        onClose={() => {
+          setPodcastForm(emptyPodcast);
+          setShowPodcastForm(false);
+        }}
+        title={podcastForm.id ? "Edit podcast" : "New podcast"}
+        description="Add a new video podcast episode to the feed."
+      >
+        <div className="space-y-4">
+          <Input
+            placeholder="Title"
+            value={podcastForm.title}
+            onChange={(event) =>
+              setPodcastForm({
+                ...podcastForm,
+                title: event.target.value
+              })
+            }
+          />
+          <Textarea
+            placeholder="Description"
+            value={podcastForm.description}
+            onChange={(event) =>
+              setPodcastForm({
+                ...podcastForm,
+                description: event.target.value
+              })
+            }
+          />
+          <div className="grid gap-3 md:grid-cols-2">
+            <Input
+              placeholder="Host"
+              value={podcastForm.host}
+              onChange={(event) =>
+                setPodcastForm({
+                  ...podcastForm,
+                  host: event.target.value
+                })
+              }
+            />
+            <Input
+              placeholder="Date (YYYY-MM-DD)"
+              type="date"
+              value={podcastForm.date}
+              onChange={(event) =>
+                setPodcastForm({
+                  ...podcastForm,
+                  date: event.target.value
+                })
+              }
+            />
+          </div>
+          <Input
+            placeholder="Video URL (embed)"
+            value={podcastForm.videoUrl}
+            onChange={(event) =>
+              setPodcastForm({
+                ...podcastForm,
+                videoUrl: event.target.value
+              })
+            }
+          />
+          <div className="flex flex-wrap gap-2">
+            <Button onClick={handlePodcastSubmit}>
+              {podcastForm.id ? "Save changes" : "Publish"}
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => {
+                setPodcastForm(emptyPodcast);
+                setShowPodcastForm(false);
+              }}
+            >
+              Close
+            </Button>
+          </div>
+        </div>
+      </Modal>
+
+      <Modal
+        open={showImageForm}
+        onClose={() => {
+          setImageForm(emptyImage);
+          setShowImageForm(false);
+        }}
+        title={imageForm.id ? "Edit image" : "Add image"}
+        description="Update the gallery with new imagery and titles."
+      >
+        <div className="space-y-4">
+          <Input
+            placeholder="Title"
+            value={imageForm.title}
+            onChange={(event) =>
+              setImageForm({ ...imageForm, title: event.target.value })
+            }
+          />
+          <ImageDropzone
+            label="Gallery image"
+            value={imageForm.url}
+            onChange={(next) => setImageForm({ ...imageForm, url: next })}
+          />
+          <div className="flex flex-wrap gap-2">
+            <Button onClick={handleImageSubmit}>
+              {imageForm.id ? "Save changes" : "Add"}
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => {
+                setImageForm(emptyImage);
+                setShowImageForm(false);
+              }}
+            >
+              Close
+            </Button>
+          </div>
+        </div>
+      </Modal>
+
+      <Modal
+        open={showEmployeeForm}
+        onClose={() => {
+          setEmployeeForm(emptyEmployee);
+          setShowEmployeeForm(false);
+        }}
+        title={employeeForm.id ? "Edit employee" : "Add employee"}
+        description="The about page updates automatically with these profiles."
+      >
+        <div className="space-y-4">
+          <Input
+            placeholder="Name"
+            value={employeeForm.name}
+            onChange={(event) =>
+              setEmployeeForm({
+                ...employeeForm,
+                name: event.target.value
+              })
+            }
+          />
+          <Input
+            placeholder="Role"
+            value={employeeForm.role}
+            onChange={(event) =>
+              setEmployeeForm({
+                ...employeeForm,
+                role: event.target.value
+              })
+            }
+          />
+          <Textarea
+            placeholder="Short bio"
+            value={employeeForm.bio}
+            onChange={(event) =>
+              setEmployeeForm({
+                ...employeeForm,
+                bio: event.target.value
+              })
+            }
+          />
+          <ImageDropzone
+            label="Employee image"
+            value={employeeForm.image}
+            onChange={(next) =>
+              setEmployeeForm({
+                ...employeeForm,
+                image: next
+              })
+            }
+          />
+          <div className="flex flex-wrap gap-2">
+            <Button onClick={handleEmployeeSubmit}>
+              {employeeForm.id ? "Save changes" : "Add"}
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => {
+                setEmployeeForm(emptyEmployee);
+                setShowEmployeeForm(false);
+              }}
+            >
+              Close
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

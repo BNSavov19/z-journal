@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { cn, getImageUrl } from "../../lib/utils";
 import { Button } from "./button";
-import { Input } from "./input";
 
 type ImageDropzoneProps = {
   label: string;
@@ -12,8 +11,6 @@ type ImageDropzoneProps = {
   helperText?: string;
 };
 
-const isDataUrl = (value: string) => value.trim().startsWith("data:");
-
 export const ImageDropzone = ({
   label,
   value,
@@ -21,21 +18,7 @@ export const ImageDropzone = ({
   helperText
 }: ImageDropzoneProps) => {
   const [isDragging, setIsDragging] = useState(false);
-  const [urlDraft, setUrlDraft] = useState("");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  useEffect(() => {
-    const trimmed = value.trim();
-    if (!trimmed) {
-      setUrlDraft("");
-      return;
-    }
-    if (isDataUrl(trimmed)) {
-      setUrlDraft("");
-      return;
-    }
-    setUrlDraft(trimmed);
-  }, [value]);
 
   const handleFile = (file?: File) => {
     if (!file || !file.type.startsWith("image/")) {
@@ -109,17 +92,6 @@ export const ImageDropzone = ({
               </Button>
             )}
           </div>
-        </div>
-        <div className="mt-4">
-          <Input
-            placeholder="Or paste an image URL"
-            value={urlDraft}
-            onChange={(event) => {
-              const next = event.target.value;
-              setUrlDraft(next);
-              onChange(next);
-            }}
-          />
         </div>
         {helperText && (
           <p className="mt-2 text-xs text-slate-500">{helperText}</p>

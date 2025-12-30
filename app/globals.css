@@ -2,14 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "react-quill/dist/quill.snow.css";
+
 :root {
   --background: #ffffff;
   --foreground: #0f172a;
-  --accent: #2b1b7d;
-  --accent-2: #f2b37c;
-  --muted: #fff4eb;
+  --accent: #403995;
+  --accent-2: #ffbe54;
+  --accent-3: #f66e52;
+  --accent-4: #1da090;
+  --accent-5: #dc2964;
+  --muted: #f4f2ff;
   --card: #ffffff;
-  --border: #e2e8f0;
+  --border: #e3e1f5;
 }
 
 * {

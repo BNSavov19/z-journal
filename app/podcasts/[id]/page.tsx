@@ -34,7 +34,9 @@ export default function PodcastDetailPage() {
 
   return (
     <div className="bg-white">
-      <section className="border-b border-border">
+      <section className="relative overflow-hidden border-b border-border bg-white">
+        <div className="pointer-events-none absolute -left-10 top-10 h-28 w-28 bg-accent3/70" style={{ clipPath: "polygon(0 15%, 85% 0, 100% 70%, 20% 100%)" }} />
+        <div className="pointer-events-none absolute right-10 top-12 h-24 w-24 bg-accent5/70" style={{ clipPath: "polygon(50% 0, 100% 65%, 20% 100%, 0 35%)" }} />
         <div className="mx-auto w-full max-w-4xl px-6 py-12">
           <Link
             href="/podcasts"
@@ -56,7 +58,7 @@ export default function PodcastDetailPage() {
       </section>
 
       <section className="mx-auto w-full max-w-4xl px-6 py-12">
-        <div className="aspect-video overflow-hidden rounded-3xl border border-border bg-white">
+        <div className="aspect-video overflow-hidden rounded-[32px] border border-border bg-white shadow-sm">
           <iframe
             className="h-full w-full"
             src={podcast.videoUrl}

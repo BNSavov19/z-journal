@@ -9,6 +9,9 @@ const config: Config = {
         foreground: "var(--foreground)",
         accent: "var(--accent)",
         accent2: "var(--accent-2)",
+        accent3: "var(--accent-3)",
+        accent4: "var(--accent-4)",
+        accent5: "var(--accent-5)",
         muted: "var(--muted)",
         card: "var(--card)",
         border: "var(--border)"

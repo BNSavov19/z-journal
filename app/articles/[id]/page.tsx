@@ -35,7 +35,9 @@ export default function ArticleDetailPage() {
 
   return (
     <div className="bg-white">
-      <section className="border-b border-border">
+      <section className="relative overflow-hidden border-b border-border bg-muted">
+        <div className="pointer-events-none absolute -left-12 top-8 h-32 w-32 bg-accent4/30" style={{ clipPath: "polygon(0 0, 100% 20%, 80% 100%, 10% 85%)" }} />
+        <div className="pointer-events-none absolute right-10 top-10 h-24 w-28 bg-accent2/80" style={{ clipPath: "polygon(50% 0, 100% 55%, 70% 100%, 0 75%)" }} />
         <div className="mx-auto w-full max-w-4xl px-6 py-12">
           <Link
             href="/articles"
@@ -60,14 +62,17 @@ export default function ArticleDetailPage() {
       </section>
 
       <section className="mx-auto w-full max-w-4xl px-6 py-12">
-        <img
-          src={getImageUrl(article.image)}
-          alt={article.title}
-          className="h-80 w-full rounded-3xl object-cover"
-        />
-        <div className="prose mt-8 max-w-none text-sm text-slate-700">
-          <p>{article.content}</p>
+        <div className="rounded-[32px] border border-border bg-white p-4 shadow-sm">
+          <img
+            src={getImageUrl(article.image)}
+            alt={article.title}
+            className="h-80 w-full rounded-2xl object-cover"
+          />
         </div>
+        <div
+          className="prose mt-8 max-w-none text-sm text-slate-700"
+          dangerouslySetInnerHTML={{ __html: article.content || "" }}
+        />
       </section>
     </div>
   );
