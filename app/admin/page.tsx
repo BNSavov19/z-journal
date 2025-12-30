@@ -260,335 +260,248 @@ export default function AdminPage() {
         </TabsList>
 
         <TabsContent value="articles">
-          <div className="grid gap-6 lg:grid-cols-[360px_1fr]">
-            <Card>
-              <CardHeader>
-                <CardTitle>Create an article</CardTitle>
-                <CardDescription>
-                  Start a new story or edit an existing one.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <Button
-                  onClick={() => {
-                    setArticleForm({ ...emptyArticle, date: getToday() });
-                    setShowArticleForm(true);
-                  }}
-                >
-                  New article
-                </Button>
-                <p className="text-xs text-slate-500">
-                  Articles open in a full editor modal for more space.
-                </p>
-              </CardContent>
-            </Card>
-
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
-                  Published articles
-                </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    setArticleForm({ ...emptyArticle, date: getToday() });
-                    setShowArticleForm(true);
-                  }}
-                >
-                  New article
-                </Button>
-              </div>
-              {data.articles.map((article) => (
-                <Card key={article.id}>
-                  <CardHeader>
-                    <CardTitle className="text-xl">{article.title}</CardTitle>
-                    <CardDescription>
-                      {article.category} · {article.author}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex items-center justify-between gap-4">
-                    <p className="text-sm text-slate-600">
-                      {article.dek}
-                    </p>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          setArticleForm(article);
-                          setShowArticleForm(true);
-                        }}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() =>
-                          update({
-                            ...data,
-                            articles: data.articles.filter(
-                              (item) => item.id !== article.id
-                            )
-                          })
-                        }
-                      >
-                        Delete
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                Published articles
+              </p>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setArticleForm({ ...emptyArticle, date: getToday() });
+                  setShowArticleForm(true);
+                }}
+              >
+                New article
+              </Button>
             </div>
+            {data.articles.map((article) => (
+              <Card key={article.id}>
+                <CardHeader>
+                  <CardTitle className="text-xl">{article.title}</CardTitle>
+                  <CardDescription>
+                    {article.category} · {article.author}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="flex items-center justify-between gap-4">
+                  <p className="text-sm text-slate-600">
+                    {article.dek}
+                  </p>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setArticleForm(article);
+                        setShowArticleForm(true);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() =>
+                        update({
+                          ...data,
+                          articles: data.articles.filter(
+                            (item) => item.id !== article.id
+                          )
+                        })
+                      }
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </TabsContent>
 
         <TabsContent value="podcasts">
-          <div className="grid gap-6 lg:grid-cols-[360px_1fr]">
-            <Card>
-              <CardHeader>
-                <CardTitle>Create a podcast</CardTitle>
-                <CardDescription>
-                  Start a new episode or edit an existing one.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button
-                  onClick={() => {
-                    setPodcastForm({ ...emptyPodcast, date: getToday() });
-                    setShowPodcastForm(true);
-                  }}
-                >
-                  New podcast
-                </Button>
-              </CardContent>
-            </Card>
-
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
-                  Published podcasts
-                </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    setPodcastForm({ ...emptyPodcast, date: getToday() });
-                    setShowPodcastForm(true);
-                  }}
-                >
-                  New podcast
-                </Button>
-              </div>
-              {data.podcasts.map((podcast) => (
-                <Card key={podcast.id}>
-                  <CardHeader>
-                    <CardTitle className="text-xl">{podcast.title}</CardTitle>
-                    <CardDescription>
-                      {podcast.host} · {podcast.date}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex items-center justify-between gap-4">
-                    <p className="text-sm text-slate-600">
-                      {podcast.description}
-                    </p>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          setPodcastForm(podcast);
-                          setShowPodcastForm(true);
-                        }}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() =>
-                          update({
-                            ...data,
-                            podcasts: data.podcasts.filter(
-                              (item) => item.id !== podcast.id
-                            )
-                          })
-                        }
-                      >
-                        Delete
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                Published podcasts
+              </p>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setPodcastForm({ ...emptyPodcast, date: getToday() });
+                  setShowPodcastForm(true);
+                }}
+              >
+                New podcast
+              </Button>
             </div>
+            {data.podcasts.map((podcast) => (
+              <Card key={podcast.id}>
+                <CardHeader>
+                  <CardTitle className="text-xl">{podcast.title}</CardTitle>
+                  <CardDescription>
+                    {podcast.host} · {podcast.date}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="flex items-center justify-between gap-4">
+                  <p className="text-sm text-slate-600">
+                    {podcast.description}
+                  </p>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setPodcastForm(podcast);
+                        setShowPodcastForm(true);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() =>
+                        update({
+                          ...data,
+                          podcasts: data.podcasts.filter(
+                            (item) => item.id !== podcast.id
+                          )
+                        })
+                      }
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </TabsContent>
 
         <TabsContent value="gallery">
-          <div className="grid gap-6 lg:grid-cols-[360px_1fr]">
-            <Card>
-              <CardHeader>
-                <CardTitle>Add a gallery image</CardTitle>
-                <CardDescription>
-                  Highlight new visuals or update existing ones.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button
-                  onClick={() => {
-                    setImageForm(emptyImage);
-                    setShowImageForm(true);
-                  }}
-                >
-                  New image
-                </Button>
-              </CardContent>
-            </Card>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="col-span-full flex items-center justify-between">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
-                  Gallery items
-                </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    setImageForm(emptyImage);
-                    setShowImageForm(true);
-                  }}
-                >
-                  New image
-                </Button>
-              </div>
-              {data.images.map((image) => (
-                <Card key={image.id}>
-                  <CardHeader>
-                    <CardTitle className="text-lg">{image.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <img
-                      src={getImageUrl(image.url)}
-                      alt={image.title}
-                      className="h-40 w-full rounded-xl object-cover"
-                    />
-                    <div className="mt-3 flex gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          setImageForm(image);
-                          setShowImageForm(true);
-                        }}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() =>
-                          update({
-                            ...data,
-                            images: data.images.filter(
-                              (item) => item.id !== image.id
-                            )
-                          })
-                        }
-                      >
-                        Delete
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="col-span-full flex items-center justify-between">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                Gallery items
+              </p>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setImageForm(emptyImage);
+                  setShowImageForm(true);
+                }}
+              >
+                New image
+              </Button>
             </div>
+            {data.images.map((image) => (
+              <Card key={image.id}>
+                <CardHeader>
+                  <CardTitle className="text-lg">{image.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <img
+                    src={getImageUrl(image.url)}
+                    alt={image.title}
+                    className="h-40 w-full rounded-xl object-cover"
+                  />
+                  <div className="mt-3 flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setImageForm(image);
+                        setShowImageForm(true);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() =>
+                        update({
+                          ...data,
+                          images: data.images.filter(
+                            (item) => item.id !== image.id
+                          )
+                        })
+                      }
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </TabsContent>
 
         <TabsContent value="team">
-          <div className="grid gap-6 lg:grid-cols-[360px_1fr]">
-            <Card>
-              <CardHeader>
-                <CardTitle>Add an employee</CardTitle>
-                <CardDescription>
-                  Keep the about page team roster current.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button
-                  onClick={() => {
-                    setEmployeeForm(emptyEmployee);
-                    setShowEmployeeForm(true);
-                  }}
-                >
-                  New employee
-                </Button>
-              </CardContent>
-            </Card>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="col-span-full flex items-center justify-between">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
-                  Team roster
-                </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    setEmployeeForm(emptyEmployee);
-                    setShowEmployeeForm(true);
-                  }}
-                >
-                  New employee
-                </Button>
-              </div>
-              {data.employees.map((employee) => (
-                <Card key={employee.id}>
-                  <CardHeader>
-                    <CardTitle className="text-lg">{employee.name}</CardTitle>
-                    <CardDescription>{employee.role}</CardDescription>
-                  </CardHeader>
-                  <CardContent>
-                    <img
-                      src={getImageUrl(employee.image)}
-                      alt={employee.name}
-                      className="h-40 w-full rounded-xl object-cover"
-                    />
-                    <p className="mt-3 text-sm text-slate-600">
-                      {employee.bio}
-                    </p>
-                    <div className="mt-3 flex gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          setEmployeeForm(employee);
-                          setShowEmployeeForm(true);
-                        }}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() =>
-                          update({
-                            ...data,
-                            employees: data.employees.filter(
-                              (item) => item.id !== employee.id
-                            )
-                          })
-                        }
-                      >
-                        Delete
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+          <div className="grid gap-4 md:grid-cols-2">
+            <div className="col-span-full flex items-center justify-between">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
+                Team roster
+              </p>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setEmployeeForm(emptyEmployee);
+                  setShowEmployeeForm(true);
+                }}
+              >
+                New employee
+              </Button>
             </div>
+            {data.employees.map((employee) => (
+              <Card key={employee.id}>
+                <CardHeader>
+                  <CardTitle className="text-lg">{employee.name}</CardTitle>
+                  <CardDescription>{employee.role}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <img
+                    src={getImageUrl(employee.image)}
+                    alt={employee.name}
+                    className="h-40 w-full rounded-xl object-cover"
+                  />
+                  <p className="mt-3 text-sm text-slate-600">
+                    {employee.bio}
+                  </p>
+                  <div className="mt-3 flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => {
+                        setEmployeeForm(employee);
+                        setShowEmployeeForm(true);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() =>
+                        update({
+                          ...data,
+                          employees: data.employees.filter(
+                            (item) => item.id !== employee.id
+                          )
+                        })
+                      }
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
           </div>
         </TabsContent>
       </Tabs>
