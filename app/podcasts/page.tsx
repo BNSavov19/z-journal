@@ -7,7 +7,7 @@ export default function PodcastsPage() {
   const { data } = useCMSData();
 
   if (!data) {
-    return <div className="mx-auto max-w-6xl px-6 py-24">Loading...</div>;
+    return <div className="mx-auto max-w-6xl px-6 py-24">Зареждане...</div>;
   }
 
   return (
@@ -17,17 +17,17 @@ export default function PodcastsPage() {
         <div className="pointer-events-none absolute right-12 bottom-8 h-24 w-28 bg-accent5/80" style={{ clipPath: "polygon(50% 0, 100% 55%, 70% 100%, 0 75%)" }} />
         <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="section-title">Podcasts</p>
+            <p className="section-title">Подкасти</p>
             <h1 className="font-display text-5xl text-foreground">
-              Audio briefs and long-form interviews
+              Аудио обзори и дълги интервюта
             </h1>
             <p className="mt-4 max-w-2xl text-sm text-slate-600">
-              Every episode pairs a concise video briefing with insights from
-              reporters and analysts across markets, policy, and innovation.
+              Всеки епизод съчетава кратък видео обзор с гледни точки от
+              репортери и анализатори по темите, които движат света.
             </p>
           </div>
           <div className="rounded-2xl border border-border bg-muted px-4 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-            New episodes weekly
+            Нов епизод всяка седмица
           </div>
         </div>
       </div>

@@ -83,34 +83,34 @@ export default function AdminPage() {
   }, []);
 
   if (!data) {
-    return <div className="mx-auto max-w-6xl px-6 py-24">Loading...</div>;
+    return <div className="mx-auto max-w-6xl px-6 py-24">Зареждане...</div>;
   }
 
   if (!isAuthed) {
     return (
       <div className="mx-auto flex w-full max-w-lg flex-col gap-6 px-6 py-20">
         <div>
-          <p className="section-title">Admin access</p>
+          <p className="section-title">Админ достъп</p>
           <h1 className="font-display text-4xl text-foreground">
-            Sign in to manage content
+            Влез, за да управляваш съдържанието
           </h1>
         </div>
         <Card>
           <CardHeader>
-            <CardTitle>Administrator login</CardTitle>
+            <CardTitle>Администраторски вход</CardTitle>
             <CardDescription>
-              Use the credentials configured in the environment variables.
+              Използвай данните от променливите на средата.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <Input
-              placeholder="Username"
+              placeholder="Потребител"
               value={loginUsername}
               onChange={(event) => setLoginUsername(event.target.value)}
             />
             <Input
               type="password"
-              placeholder="Password"
+              placeholder="Парола"
               value={loginPassword}
               onChange={(event) => setLoginPassword(event.target.value)}
             />
@@ -121,7 +121,7 @@ export default function AdminPage() {
               onClick={() => {
                 const ok = verifyCredentials(loginUsername, loginPassword);
                 if (!ok) {
-                  setLoginError("Invalid username or password.");
+                  setLoginError("Невалиден потребител или парола.");
                   return;
                 }
                 setLoginError("");
@@ -221,13 +221,13 @@ export default function AdminPage() {
     <div className="mx-auto w-full max-w-6xl px-6 py-16">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <p className="section-title">Admin panel</p>
+          <p className="section-title">Админ панел</p>
           <h1 className="font-display text-5xl text-foreground">
-            Content management
+            Управление на съдържание
           </h1>
           <p className="mt-3 max-w-xl text-sm text-slate-600">
-            Add, edit, and manage articles, podcasts, images, and the about page
-            team roster. This panel uses shadcn-inspired UI components.
+            Добавяй и редактирай статии, подкасти, снимки и екипа на страницата
+            „За нас“. Панелът използва компоненти със shadcn стил.
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -253,17 +253,17 @@ export default function AdminPage() {
 
       <Tabs defaultValue="articles" className="mt-10">
         <TabsList>
-          <TabsTrigger value="articles">Articles</TabsTrigger>
-          <TabsTrigger value="podcasts">Podcasts</TabsTrigger>
-          <TabsTrigger value="gallery">Gallery</TabsTrigger>
-          <TabsTrigger value="team">Employees</TabsTrigger>
+          <TabsTrigger value="articles">Статии</TabsTrigger>
+          <TabsTrigger value="podcasts">Подкасти</TabsTrigger>
+          <TabsTrigger value="gallery">Галерия</TabsTrigger>
+          <TabsTrigger value="team">Екип</TabsTrigger>
         </TabsList>
 
         <TabsContent value="articles">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
-                Published articles
+                Публикувани статии
               </p>
               <Button
                 variant="outline"
@@ -278,16 +278,14 @@ export default function AdminPage() {
             </div>
             {data.articles.map((article) => (
               <Card key={article.id}>
-                <CardHeader>
-                  <CardTitle className="text-xl">{article.title}</CardTitle>
-                  <CardDescription>
-                    {article.category} · {article.author}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="flex items-center justify-between gap-4">
-                  <p className="text-sm text-slate-600">
-                    {article.dek}
-                  </p>
+                  <CardHeader>
+                    <CardTitle className="text-xl">{article.title}</CardTitle>
+                    <CardDescription>
+                      {article.category} · {article.author}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex items-center justify-between gap-4">
+                    <p className="text-sm text-slate-600">{article.dek}</p>
                   <div className="flex gap-2">
                     <Button
                       variant="outline"
@@ -324,7 +322,7 @@ export default function AdminPage() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
-                Published podcasts
+                Публикувани подкасти
               </p>
               <Button
                 variant="outline"
@@ -339,16 +337,14 @@ export default function AdminPage() {
             </div>
             {data.podcasts.map((podcast) => (
               <Card key={podcast.id}>
-                <CardHeader>
-                  <CardTitle className="text-xl">{podcast.title}</CardTitle>
-                  <CardDescription>
-                    {podcast.host} · {podcast.date}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="flex items-center justify-between gap-4">
-                  <p className="text-sm text-slate-600">
-                    {podcast.description}
-                  </p>
+                  <CardHeader>
+                    <CardTitle className="text-xl">{podcast.title}</CardTitle>
+                    <CardDescription>
+                      {podcast.host} · {podcast.date}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="flex items-center justify-between gap-4">
+                    <p className="text-sm text-slate-600">{podcast.description}</p>
                   <div className="flex gap-2">
                     <Button
                       variant="outline"
@@ -385,7 +381,7 @@ export default function AdminPage() {
           <div className="grid gap-4 md:grid-cols-2">
             <div className="col-span-full flex items-center justify-between">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
-                Gallery items
+                Елементи в галерията
               </p>
               <Button
                 variant="outline"
@@ -445,7 +441,7 @@ export default function AdminPage() {
           <div className="grid gap-4 md:grid-cols-2">
             <div className="col-span-full flex items-center justify-between">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
-                Team roster
+                Екип
               </p>
               <Button
                 variant="outline"
@@ -508,7 +504,7 @@ export default function AdminPage() {
 
       {!isReady && (
         <div className="mt-10 rounded-2xl border border-border bg-muted p-6 text-sm text-slate-600">
-          Loading content...
+          Зареждане на съдържанието...
         </div>
       )}
 
@@ -518,12 +514,12 @@ export default function AdminPage() {
           setArticleForm(emptyArticle);
           setShowArticleForm(false);
         }}
-        title={articleForm.id ? "Edit article" : "New article"}
-        description="Publish the latest story or update an existing entry."
+        title={articleForm.id ? "Редакция на статия" : "Нова статия"}
+        description="Публикувай нова история или обнови съществуваща."
       >
         <div className="space-y-4">
           <Input
-            placeholder="Title"
+            placeholder="Заглавие"
             value={articleForm.title}
             onChange={(event) =>
               setArticleForm({
@@ -533,7 +529,7 @@ export default function AdminPage() {
             }
           />
           <Input
-            placeholder="Subtitle / dek"
+            placeholder="Подзаглавие / дек"
             value={articleForm.dek}
             onChange={(event) =>
               setArticleForm({
@@ -543,7 +539,7 @@ export default function AdminPage() {
             }
           />
           <RichTextEditor
-            placeholder="Write the full article here..."
+            placeholder="Напиши пълния текст тук..."
             value={articleForm.content}
             onChange={(next) =>
               setArticleForm({
@@ -554,7 +550,7 @@ export default function AdminPage() {
           />
           <div className="grid gap-3 md:grid-cols-2">
             <Input
-              placeholder="Author"
+              placeholder="Автор"
               value={articleForm.author}
               onChange={(event) =>
                 setArticleForm({
@@ -564,7 +560,7 @@ export default function AdminPage() {
               }
             />
             <Input
-              placeholder="Date (YYYY-MM-DD)"
+              placeholder="Дата (ГГГГ-ММ-ДД)"
               type="date"
               value={articleForm.date}
               onChange={(event) =>
@@ -575,7 +571,7 @@ export default function AdminPage() {
               }
             />
             <Input
-              placeholder="Category"
+              placeholder="Категория"
               value={articleForm.category}
               onChange={(event) =>
                 setArticleForm({
@@ -585,7 +581,7 @@ export default function AdminPage() {
               }
             />
             <Input
-              placeholder="Read time (e.g. 5 min)"
+              placeholder="Време за четене (напр. 5 мин)"
               value={articleForm.readTime}
               onChange={(event) =>
                 setArticleForm({
@@ -596,7 +592,7 @@ export default function AdminPage() {
             />
           </div>
           <ImageDropzone
-            label="Article image"
+            label="Снимка към статията"
             value={articleForm.image}
             onChange={(next) =>
               setArticleForm({
@@ -628,12 +624,12 @@ export default function AdminPage() {
           setPodcastForm(emptyPodcast);
           setShowPodcastForm(false);
         }}
-        title={podcastForm.id ? "Edit podcast" : "New podcast"}
-        description="Add a new video podcast episode to the feed."
+        title={podcastForm.id ? "Редакция на подкаст" : "Нов подкаст"}
+        description="Добави нов видео епизод в подкастите."
       >
         <div className="space-y-4">
           <Input
-            placeholder="Title"
+            placeholder="Заглавие"
             value={podcastForm.title}
             onChange={(event) =>
               setPodcastForm({
@@ -643,7 +639,7 @@ export default function AdminPage() {
             }
           />
           <Textarea
-            placeholder="Description"
+            placeholder="Описание"
             value={podcastForm.description}
             onChange={(event) =>
               setPodcastForm({
@@ -654,7 +650,7 @@ export default function AdminPage() {
           />
           <div className="grid gap-3 md:grid-cols-2">
             <Input
-              placeholder="Host"
+              placeholder="Водещ"
               value={podcastForm.host}
               onChange={(event) =>
                 setPodcastForm({
@@ -664,7 +660,7 @@ export default function AdminPage() {
               }
             />
             <Input
-              placeholder="Date (YYYY-MM-DD)"
+              placeholder="Дата (ГГГГ-ММ-ДД)"
               type="date"
               value={podcastForm.date}
               onChange={(event) =>
@@ -676,7 +672,7 @@ export default function AdminPage() {
             />
           </div>
           <Input
-            placeholder="Video URL (embed)"
+            placeholder="Видео URL (embed)"
             value={podcastForm.videoUrl}
             onChange={(event) =>
               setPodcastForm({
@@ -708,19 +704,19 @@ export default function AdminPage() {
           setImageForm(emptyImage);
           setShowImageForm(false);
         }}
-        title={imageForm.id ? "Edit image" : "Add image"}
-        description="Update the gallery with new imagery and titles."
+        title={imageForm.id ? "Редакция на изображение" : "Ново изображение"}
+        description="Обнови галерията със снимки и заглавия."
       >
         <div className="space-y-4">
           <Input
-            placeholder="Title"
+            placeholder="Заглавие"
             value={imageForm.title}
             onChange={(event) =>
               setImageForm({ ...imageForm, title: event.target.value })
             }
           />
           <ImageDropzone
-            label="Gallery image"
+            label="Снимка за галерията"
             value={imageForm.url}
             onChange={(next) => setImageForm({ ...imageForm, url: next })}
           />
@@ -747,12 +743,12 @@ export default function AdminPage() {
           setEmployeeForm(emptyEmployee);
           setShowEmployeeForm(false);
         }}
-        title={employeeForm.id ? "Edit employee" : "Add employee"}
-        description="The about page updates automatically with these profiles."
+        title={employeeForm.id ? "Редакция на профил" : "Нов профил"}
+        description="Страницата „За нас“ се обновява автоматично с тези профили."
       >
         <div className="space-y-4">
           <Input
-            placeholder="Name"
+            placeholder="Име"
             value={employeeForm.name}
             onChange={(event) =>
               setEmployeeForm({
@@ -762,7 +758,7 @@ export default function AdminPage() {
             }
           />
           <Input
-            placeholder="Role"
+            placeholder="Роля"
             value={employeeForm.role}
             onChange={(event) =>
               setEmployeeForm({
@@ -772,7 +768,7 @@ export default function AdminPage() {
             }
           />
           <Textarea
-            placeholder="Short bio"
+            placeholder="Кратка биография"
             value={employeeForm.bio}
             onChange={(event) =>
               setEmployeeForm({
@@ -782,7 +778,7 @@ export default function AdminPage() {
             }
           />
           <ImageDropzone
-            label="Employee image"
+            label="Снимка на човека"
             value={employeeForm.image}
             onChange={(next) =>
               setEmployeeForm({

@@ -7,7 +7,7 @@ export default function AboutPage() {
   const { data } = useCMSData();
 
   if (!data) {
-    return <div className="mx-auto max-w-6xl px-6 py-24">Loading...</div>;
+    return <div className="mx-auto max-w-6xl px-6 py-24">Зареждане...</div>;
   }
 
   return (
@@ -18,54 +18,39 @@ export default function AboutPage() {
         <div className="mx-auto w-full max-w-6xl px-6 py-16">
           <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
             <div>
-              <p className="section-title">About</p>
+              <p className="section-title">За нас</p>
               <h1 className="font-display text-5xl text-foreground">
-                A newsroom built for the new economy
+                Историите зад новините - разказани по нашия начин
               </h1>
               <p className="mt-4 max-w-3xl text-sm text-slate-600">
-                Z Journal is a global business newsroom focused on clear,
-                data-driven reporting. We connect markets, policy, and technology
-                with human stories, helping leaders make decisions amid volatility.
-              </p>
-            </div>
-            <div className="rounded-3xl border border-border bg-white p-6 shadow-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-                Our promise
-              </p>
-              <h2 className="mt-3 font-display text-3xl text-foreground">
-                Clarity, rigor, and a modern lens.
-              </h2>
-              <p className="mt-3 text-sm text-slate-600">
-                Every story is built to explain what matters, why it shifts, and
-                how leaders should respond.
+                Z Journal e студентска медия, създадена от пет момичета, които учат журналистика в НБУ. Пишем за света около нас така, както го вижа нашето поколение - с позиция, критично мислене и характер.
               </p>
             </div>
           </div>
           <div className="mt-10 grid gap-6 md:grid-cols-3">
             <div className="rounded-3xl border border-border bg-white p-6 shadow-sm">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-                Mission
+                Мисия
               </p>
               <p className="mt-2 text-sm text-slate-600">
-                Deliver independent financial journalism with clarity,
-                confidence, and context.
+                Да предоставяме независима финансова журналистика с яснота,
+                увереност и контекст.
               </p>
             </div>
             <div className="rounded-3xl border border-border bg-white p-6 shadow-sm">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-                Coverage
+                Обхват
               </p>
               <p className="mt-2 text-sm text-slate-600">
-                Markets, geopolitics, business strategy, and emerging
-                technologies.
+                Пазари, геополитика, бизнес стратегия и нови технологии.
               </p>
             </div>
             <div className="rounded-3xl border border-border bg-white p-6 shadow-sm">
               <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-                Values
+                Ценности
               </p>
               <p className="mt-2 text-sm text-slate-600">
-                Accuracy, transparency, and a deep respect for our readers.
+                Точност, прозрачност и уважение към читателите.
               </p>
             </div>
           </div>
@@ -75,21 +60,21 @@ export default function AboutPage() {
       <section className="mx-auto w-full max-w-6xl px-6 py-16">
         <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-end">
           <div>
-            <p className="section-title">Team</p>
+            <p className="section-title">Екип</p>
             <h2 className="font-display text-4xl text-foreground">
-              Meet the newsroom
+              Запознай се с редакцията
             </h2>
             <p className="mt-3 max-w-2xl text-sm text-slate-600">
-              The people shaping our coverage, available in the CMS to keep the
-              team list current and accurate.
+              Хората, които оформят съдържанието ни, видими в CMS за
+              актуален и точен списък.
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             {[
-              { label: "Editors", value: "28" },
-              { label: "Bureaus", value: "12" },
-              { label: "Partners", value: "40+" },
-              { label: "Years of coverage", value: "15" }
+              { label: "Редактори", value: "28" },
+              { label: "Бюра", value: "12" },
+              { label: "Партньори", value: "40+" },
+              { label: "Години опит", value: "15" }
             ].map((item) => (
               <div
                 key={item.label}

@@ -11,37 +11,38 @@ export const SiteFooter = () => (
           <div>
             <p className="font-display text-2xl text-foreground">Z Journal</p>
             <p className="text-sm text-slate-600">
-              Independent financial journalism for the modern economy.
+              Новини и истории от Gen Z - за Gen Z.
             </p>
           </div>
         </div>
         <p className="text-sm text-slate-600">
-          Daily reporting, long-form analysis, and bold visuals covering markets,
-          policy, and culture.
+          Ежедневни репортажи и дългосрочни анализи, разказващи случващото се около нас, написани на наш език, с нашия поглед и нашия ритьм.
         </p>
       </div>
       <div className="text-sm text-slate-600">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-          Desk
+          Редакции
         </p>
         <div className="mt-4 space-y-2">
-          <p>Markets & Economy</p>
-          <p>Technology & AI</p>
-          <p>Energy & Climate</p>
-          <p>Global Policy</p>
+          <p>Общество & Култура</p>
+          <p>Млади хора & Идентичност</p>
+          <p>Медии, технологии & социални мрежи</p>
+          <p>Образование & бъдеще</p>
         </div>
       </div>
       <div className="text-sm text-slate-600">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-          Contact
+          Контакт
         </p>
         <div className="mt-4 space-y-2">
-          <p>newsroom@zjournal.com</p>
-          <p>press@zjournal.com</p>
-          <p>Editorial HQ · New York</p>
+          <p>desislavaaa.todorova@gmail.com</p>
+          <p>
+            <a href="https://www.instagram.com/zjournal_sofia?igsh=anJ3YnI5YmxkMHJ2">Instagram</a>
+          </p>
+          <p>Редакция: София, НБУ</p>
         </div>
         <p className="mt-6 text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-          © 2024 Z Journal Newsroom
+          © 2025 Z Journal | GEN Z Newsroom
         </p>
       </div>
     </div>

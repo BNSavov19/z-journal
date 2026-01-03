@@ -11,7 +11,7 @@ export default function ArticleDetailPage() {
   const { data } = useCMSData();
 
   if (!data) {
-    return <div className="mx-auto max-w-6xl px-6 py-24">Loading...</div>;
+    return <div className="mx-auto max-w-6xl px-6 py-24">Зареждане...</div>;
   }
 
   const article = data.articles.find((item) => item.id === params.id);
@@ -19,15 +19,15 @@ export default function ArticleDetailPage() {
   if (!article) {
     return (
       <div className="mx-auto max-w-3xl px-6 py-24">
-        <p className="section-title">Article</p>
+        <p className="section-title">Статия</p>
         <h1 className="font-display text-4xl text-foreground">
-          Article not found
+          Статията не е намерена
         </h1>
         <Link
           href="/articles"
           className="mt-6 inline-flex text-xs font-semibold uppercase tracking-[0.2em] text-accent"
         >
-          Back to articles
+          Обратно към статиите
         </Link>
       </div>
     );
@@ -43,7 +43,7 @@ export default function ArticleDetailPage() {
             href="/articles"
             className="text-xs font-semibold uppercase tracking-[0.2em] text-accent"
           >
-            Back to articles
+            Обратно към статиите
           </Link>
           <div className="mt-6 flex items-center gap-3">
             <Badge>{article.category}</Badge>

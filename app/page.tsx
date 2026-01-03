@@ -10,12 +10,10 @@ export default function HomePage() {
   const { data } = useCMSData();
 
   if (!data) {
-    return <div className="mx-auto max-w-6xl px-6 py-24">Loading...</div>;
+    return <div className="mx-auto max-w-6xl px-6 py-24">Зареждане...</div>;
   }
 
   const [featured, ...rest] = data.articles;
-  const spotlight = rest.slice(0, 2);
-  const latest = rest.slice(2);
 
   return (
     <div className="bg-white">
@@ -42,42 +40,41 @@ export default function HomePage() {
             <div className="space-y-6">
               <div className="flex flex-wrap gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
                 <span className="rounded-full border border-border bg-white px-3 py-1">
-                  Markets
+                  Общество
                 </span>
                 <span className="rounded-full border border-border bg-white px-3 py-1">
-                  Policy
+                  Култура
                 </span>
                 <span className="rounded-full border border-border bg-white px-3 py-1">
-                  Tech
+                  Медии
                 </span>
               </div>
               <h1 className="font-display text-5xl leading-tight text-foreground md:text-6xl">
-                The daily playbook for global markets and ideas.
+                Историите зад новините - разказани по нашия начин
               </h1>
               <p className="max-w-xl text-base text-slate-600">
-                Z Journal delivers sharp reporting, long-form analysis, and a
-                premium editorial experience with vivid data and human stories.
+                Z Journal e студентска медия, създадена от пет момичета, които учат журналистика в НБУ. Пишем за света около нас така, както го вижа нашето поколение - с позиция, критично мислене и характер.
               </p>
               <div className="flex flex-wrap gap-4">
                 <Link
                   href="/articles"
                   className="rounded-full bg-accent px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-white"
                 >
-                  Read the latest
+                  Прочети най-новото
                 </Link>
                 <Link
                   href="/podcasts"
                   className="rounded-full border border-accent px-6 py-3 text-xs font-semibold uppercase tracking-[0.2em] text-accent"
                 >
-                  Listen to podcasts
+                  Слушай подкасти
                 </Link>
               </div>
             </div>
             <div className="grid gap-4 md:grid-cols-3">
               {[
-                { label: "Daily subscribers", value: "120k+" },
-                { label: "Global bureaus", value: "36" },
-                { label: "Editorial desks", value: "18" }
+                { label: "члена в екипа", value: "5" },
+                { label: "студентски поглед", value: "100%" },
+                { label: "идеи и истории", value: "∞" }
               ].map((item) => (
                 <div
                   key={item.label}
@@ -119,29 +116,6 @@ export default function HomePage() {
                   {featured.author}
                 </p>
               </div>
-              <div className="grid gap-4">
-                {spotlight.map((article) => (
-                  <Link
-                    key={article.id}
-                    href={`/articles/${article.id}`}
-                    className="flex items-center gap-4 rounded-2xl border border-border bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-soft"
-                  >
-                    <img
-                      src={getImageUrl(article.image)}
-                      alt={article.title}
-                      className="h-16 w-20 rounded-xl object-cover"
-                    />
-                    <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-                        {article.category}
-                      </p>
-                      <p className="font-display text-lg text-foreground">
-                        {article.title}
-                      </p>
-                    </div>
-                  </Link>
-                ))}
-              </div>
             </div>
           )}
         </div>
@@ -152,20 +126,20 @@ export default function HomePage() {
         <div className="pointer-events-none absolute -top-2 right-28 h-16 w-16 bg-accent/90" style={{ clipPath: "polygon(0 0, 100% 20%, 75% 100%, 10% 80%)" }} />
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="section-title">Latest articles</p>
+            <p className="section-title">Последни статии</p>
             <h2 className="font-display text-4xl text-foreground">
-              Newsroom highlights
+              Акценти от редакцията
             </h2>
           </div>
           <Link
             href="/articles"
-            className="text-xs font-semibold uppercase tracking-[0.2em] text-accent"
+            className="hidden rounded-full border border-accent px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-accent hover:bg-accent hover:text-white md:inline-flex"
           >
-            View all
+            Виж всички
           </Link>
         </div>
         <div className="mt-10 grid gap-8 md:grid-cols-2">
-          {latest.map((article) => (
+          {rest.map((article) => (
             <ArticleCard key={article.id} article={article} />
           ))}
         </div>
@@ -177,14 +151,13 @@ export default function HomePage() {
         <div className="mx-auto w-full max-w-6xl px-6 py-16">
           <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
             <div className="rounded-3xl border border-border bg-white p-6 shadow-sm">
-              <p className="section-title">From the editors</p>
+              <p className="section-title">От редакторите</p>
               <h2 className="mt-4 font-display text-4xl text-foreground">
-                A curated global view.
+                Подбран поглед към света.
               </h2>
               <p className="mt-4 text-sm text-slate-600">
-                Our reporters track market movers, capital flows, and deep
-                political shifts with the analytical rigor expected from a modern
-                business daily.
+                Следим движенията на пазара, капиталовите потоци и политическите
+                промени с аналитичната точност, която се очаква от модерна медия.
               </p>
               <div className="mt-6 grid gap-4">
                 {data.articles.slice(0, 2).map((article) => (

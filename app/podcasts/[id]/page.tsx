@@ -10,7 +10,7 @@ export default function PodcastDetailPage() {
   const { data } = useCMSData();
 
   if (!data) {
-    return <div className="mx-auto max-w-6xl px-6 py-24">Loading...</div>;
+    return <div className="mx-auto max-w-6xl px-6 py-24">Зареждане...</div>;
   }
 
   const podcast = data.podcasts.find((item) => item.id === params.id);
@@ -18,15 +18,15 @@ export default function PodcastDetailPage() {
   if (!podcast) {
     return (
       <div className="mx-auto max-w-3xl px-6 py-24">
-        <p className="section-title">Podcast</p>
+        <p className="section-title">Подкаст</p>
         <h1 className="font-display text-4xl text-foreground">
-          Podcast not found
+          Подкастът не е намерен
         </h1>
         <Link
           href="/podcasts"
           className="mt-6 inline-flex text-xs font-semibold uppercase tracking-[0.2em] text-accent"
         >
-          Back to podcasts
+          Обратно към подкастите
         </Link>
       </div>
     );
@@ -42,7 +42,7 @@ export default function PodcastDetailPage() {
             href="/podcasts"
             className="text-xs font-semibold uppercase tracking-[0.2em] text-accent"
           >
-            Back to podcasts
+            Обратно към подкастите
           </Link>
           <h1 className="mt-6 font-display text-5xl text-foreground">
             {podcast.title}

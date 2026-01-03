@@ -18,7 +18,8 @@ const body = Source_Sans_3({
 
 export const metadata: Metadata = {
   title: "Z Journal",
-  description: "Z Journal delivers modern financial journalism with deep reporting and sharp visuals."
+  description:
+    "Z Journal предлага модерна финансова журналистика с дълбоки анализи и силна визуална линия."
 };
 
 export default function RootLayout({

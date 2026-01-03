@@ -4,12 +4,12 @@ import Link from "next/link";
 import { useState } from "react";
 
 const links = [
-  { href: "/", label: "Home" },
-  { href: "/articles", label: "Articles" },
-  { href: "/podcasts", label: "Podcasts" },
-  { href: "/gallery", label: "Gallery" },
-  { href: "/about", label: "About" },
-  { href: "/admin", label: "Admin" }
+  { href: "/", label: "Начало" },
+  { href: "/articles", label: "Статии" },
+  { href: "/podcasts", label: "Подкасти" },
+  { href: "/gallery", label: "Галерия" },
+  { href: "/about", label: "За нас" },
+  { href: "/admin", label: "Админ" }
 ];
 
 export const SiteNav = () => {
@@ -28,7 +28,7 @@ export const SiteNav = () => {
               Z Journal
             </p>
             <p className="font-display text-2xl text-foreground">
-              The Global Market Journal
+              Новините през погледа на Gen Z
             </p>
           </div>
         </div>
@@ -44,23 +44,17 @@ export const SiteNav = () => {
             href="/articles"
             className="hidden rounded-full border border-accent px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-accent hover:bg-accent hover:text-white md:inline-flex"
           >
-            Latest
-          </Link>
-          <Link
-            href="/podcasts"
-            className="hidden rounded-full bg-accent px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white hover:bg-[#332f7d] sm:inline-flex"
-          >
-            Subscribe
+            Най-ново
           </Link>
           <button
             type="button"
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border text-slate-600 hover:border-accent hover:text-accent md:hidden"
-            aria-label="Toggle navigation"
+            aria-label="Превключи навигацията"
             aria-expanded={isOpen}
             aria-controls="mobile-nav"
             onClick={() => setIsOpen((prev) => !prev)}
           >
-            <span className="sr-only">Toggle navigation</span>
+            <span className="sr-only">Превключи навигацията</span>
             <div className="flex flex-col gap-1">
               <span className="h-0.5 w-5 rounded-full bg-current" />
               <span className="h-0.5 w-5 rounded-full bg-current" />
@@ -87,14 +81,14 @@ export const SiteNav = () => {
               className="inline-flex w-fit rounded-full border border-accent px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-accent"
               onClick={() => setIsOpen(false)}
             >
-              Latest
+              Най-ново
             </Link>
             <Link
               href="/podcasts"
               className="inline-flex w-fit rounded-full bg-accent px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-white"
               onClick={() => setIsOpen(false)}
             >
-              Subscribe
+              Абонирай се
             </Link>
           </nav>
         </div>

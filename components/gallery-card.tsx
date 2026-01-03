@@ -14,7 +14,7 @@ export const GalleryCard = ({ image }: { image: GalleryImage }) => (
     <div className="flex items-center justify-between p-4">
       <p className="text-sm font-semibold text-foreground">{image.title}</p>
       <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-accent">
-        Gallery
+        Галерия
       </span>
     </div>
   </div>

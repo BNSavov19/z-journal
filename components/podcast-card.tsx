@@ -5,7 +5,7 @@ import { formatDate } from "../lib/utils";
 export const PodcastCard = ({ podcast }: { podcast: Podcast }) => (
   <div className="rounded-3xl border border-border bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-soft">
     <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-      <span>Podcast</span>
+      <span>Подкаст</span>
       <span className="text-slate-500">{formatDate(podcast.date)}</span>
     </div>
     <Link href={`/podcasts/${podcast.id}`}>
@@ -20,7 +20,7 @@ export const PodcastCard = ({ podcast }: { podcast: Podcast }) => (
         href={`/podcasts/${podcast.id}`}
         className="text-xs font-semibold uppercase tracking-[0.2em] text-accent"
       >
-        View episode
+        Виж епизода
       </Link>
     </div>
     <div className="mt-4 overflow-hidden rounded-2xl border border-border">
