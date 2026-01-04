@@ -6,7 +6,7 @@ export const SiteFooter = () => (
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-3">
           <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-accent/10">
-            <img src="/logo.svg" alt="Z Journal logo" className="h-10 w-10" />
+            <img src="/z-journal-logo.webp" alt="Z Journal logo" className="h-10 w-10" />
           </div>
           <div>
             <p className="font-display text-2xl text-foreground">Z Journal</p>

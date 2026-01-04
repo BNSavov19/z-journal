@@ -65,16 +65,15 @@ export default function AboutPage() {
               Запознай се с редакцията
             </h2>
             <p className="mt-3 max-w-2xl text-sm text-slate-600">
-              Хората, които оформят съдържанието ни, видими в CMS за
-              актуален и точен списък.
+              Ние сме екип, който споделя идеи и изгражда съдържание от нулата - от темата и текста до визията и публикуването.
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
             {[
-              { label: "Редактори", value: "28" },
-              { label: "Бюра", value: "12" },
-              { label: "Партньори", value: "40+" },
-              { label: "Години опит", value: "15" }
+              { label: "члена на екипа", value: "5" },
+              { label: "обща редакция", value: "1" },
+              { label: "идеи и гледни точки", value: "∞" },
+              { label: "годината, в която започнахме", value: "2025" }
             ].map((item) => (
               <div
                 key={item.label}
