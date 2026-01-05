@@ -33,8 +33,7 @@ export default function AboutPage() {
                 Мисия
               </p>
               <p className="mt-2 text-sm text-slate-600">
-                Да предоставяме независима финансова журналистика с яснота,
-                увереност и контекст.
+                Да създаваме независима студентска журналистика с глас, характер и отношение към реалността, в която живее Gen
               </p>
             </div>
             <div className="rounded-3xl border border-border bg-white p-6 shadow-sm">
@@ -42,7 +41,7 @@ export default function AboutPage() {
                 Обхват
               </p>
               <p className="mt-2 text-sm text-slate-600">
-                Пазари, геополитика, бизнес стратегия и нови технологии.
+                Общество и култура • Млади хора • Медии и социални мрежи • Технологии • Образование и
               </p>
             </div>
             <div className="rounded-3xl border border-border bg-white p-6 shadow-sm">
@@ -50,7 +49,7 @@ export default function AboutPage() {
                 Ценности
               </p>
               <p className="mt-2 text-sm text-slate-600">
-                Точност, прозрачност и уважение към читателите.
+                Честност, критично мислене и уважение към читателя.
               </p>
             </div>
           </div>

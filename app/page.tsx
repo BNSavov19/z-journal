@@ -144,59 +144,6 @@ export default function HomePage() {
           ))}
         </div>
       </section>
-
-      <section className="relative overflow-hidden border-t border-border bg-muted">
-        <div className="pointer-events-none absolute -right-24 top-10 h-64 w-64 rotate-6 bg-accent/15" style={{ clipPath: "polygon(10% 0, 100% 20%, 70% 100%, 0 85%)" }} />
-        <div className="pointer-events-none absolute -left-20 bottom-8 h-48 w-48 bg-accent5/20" style={{ clipPath: "polygon(0 15%, 70% 0, 100% 80%, 15% 100%)" }} />
-        <div className="mx-auto w-full max-w-6xl px-6 py-16">
-          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-            <div className="rounded-3xl border border-border bg-white p-6 shadow-sm">
-              <p className="section-title">От редакторите</p>
-              <h2 className="mt-4 font-display text-4xl text-foreground">
-                Подбран поглед към света.
-              </h2>
-              <p className="mt-4 text-sm text-slate-600">
-                Следим движенията на пазара, капиталовите потоци и политическите
-                промени с аналитичната точност, която се очаква от модерна медия.
-              </p>
-              <div className="mt-6 grid gap-4">
-                {data.articles.slice(0, 2).map((article) => (
-                  <Link
-                    key={article.id}
-                    href={`/articles/${article.id}`}
-                    className="flex items-center justify-between rounded-2xl border border-border bg-muted px-4 py-3 text-sm font-semibold text-foreground"
-                  >
-                    <span>{article.title}</span>
-                    <span className="text-xs font-semibold uppercase tracking-[0.2em] text-accent">
-                      {article.category}
-                    </span>
-                  </Link>
-                ))}
-              </div>
-            </div>
-            <div className="grid gap-6 md:grid-cols-2">
-              {data.articles.slice(0, 4).map((article, index) => (
-                <div
-                  key={article.id}
-                  className="rounded-3xl border border-border bg-white p-6 shadow-sm"
-                >
-                  <p
-                    className={`text-xs font-semibold uppercase tracking-[0.2em] ${
-                      index % 2 === 0 ? "text-accent" : "text-accent4"
-                    }`}
-                  >
-                    {article.category}
-                  </p>
-                  <h3 className="mt-3 font-display text-2xl text-foreground">
-                    {article.title}
-                  </h3>
-                  <p className="mt-2 text-sm text-slate-600">{article.dek}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
