@@ -1,37 +1,24 @@
-import { defaultData } from "./default-data";
-import type { CMSData } from "./types";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "./firebase";
 
-const STORAGE_KEY = "z_journal_cms_data";
+const sanitizeFileName = (name: string) =>
+  name.replace(/[^a-zA-Z0-9._-]/g, "_");
 
-export const getCMSData = (): CMSData => {
-  if (typeof window === "undefined") {
-    return defaultData;
-  }
-
-  const raw = window.localStorage.getItem(STORAGE_KEY);
-  if (!raw) {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultData));
-    return defaultData;
-  }
-
-  try {
-    return JSON.parse(raw) as CMSData;
-  } catch {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultData));
-    return defaultData;
-  }
+const createUploadPath = (file: File, folder: string) => {
+  const safeName = sanitizeFileName(file.name || "image");
+  const extension = safeName.includes(".") ? "" : ".jpg";
+  const id =
+    typeof crypto !== "undefined" && "randomUUID" in crypto
+      ? crypto.randomUUID()
+      : `${Date.now()}-${Math.random().toString(16).slice(2)}`;
+  return `${folder}/${id}-${safeName}${extension}`;
 };
 
-export const setCMSData = (data: CMSData) => {
-  if (typeof window === "undefined") {
-    return;
-  }
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-};
-
-export const resetCMSData = () => {
-  if (typeof window === "undefined") {
-    return;
-  }
-  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultData));
+export const uploadImage = async (file: File, folder = "images") => {
+  const path = createUploadPath(file, folder);
+  const storageRef = ref(storage, path);
+  const snapshot = await uploadBytes(storageRef, file, {
+    contentType: file.type || "image/jpeg"
+  });
+  return getDownloadURL(snapshot.ref);
 };

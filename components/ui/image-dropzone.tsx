@@ -1,6 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { getAdminSession } from "../../lib/admin-auth";
+import { uploadImage } from "../../lib/storage";
 import { cn, getImageUrl } from "../../lib/utils";
 import { Button } from "./button";
 
@@ -9,30 +11,56 @@ type ImageDropzoneProps = {
   value: string;
   onChange: (value: string) => void;
   helperText?: string;
+  storagePath?: string;
 };
 
 export const ImageDropzone = ({
   label,
   value,
   onChange,
-  helperText
+  helperText,
+  storagePath = "images"
 }: ImageDropzoneProps) => {
   const [isDragging, setIsDragging] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState("");
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handleFile = (file?: File) => {
+  useEffect(() => {
+    if (!previewUrl) {
+      return;
+    }
+    return () => {
+      URL.revokeObjectURL(previewUrl);
+    };
+  }, [previewUrl]);
+
+  const handleFile = async (file?: File) => {
     if (!file || !file.type.startsWith("image/")) {
       return;
     }
-    const reader = new FileReader();
-    reader.onload = () => {
-      const result = typeof reader.result === "string" ? reader.result : "";
-      if (result) {
-        onChange(result);
-      }
-    };
-    reader.readAsDataURL(file);
+    if (!getAdminSession()) {
+      setUploadError("Admin login required to upload images.");
+      return;
+    }
+    setUploadError("");
+    const nextPreview = URL.createObjectURL(file);
+    setPreviewUrl(nextPreview);
+    setIsUploading(true);
+    try {
+      const downloadUrl = await uploadImage(file, storagePath);
+      onChange(downloadUrl);
+      setPreviewUrl(null);
+    } catch (error) {
+      setUploadError("Upload failed. Please try again.");
+      console.error(error);
+    } finally {
+      setIsUploading(false);
+    }
   };
+
+  const displayUrl = previewUrl ?? getImageUrl(value);
 
   return (
     <div className="space-y-2">
@@ -55,12 +83,12 @@ export const ImageDropzone = ({
           event.preventDefault();
           setIsDragging(false);
           const [file] = Array.from(event.dataTransfer.files);
-          handleFile(file);
+          void handleFile(file);
         }}
       >
         <div className="flex flex-col gap-4 md:flex-row md:items-center">
           <img
-            src={getImageUrl(value)}
+            src={displayUrl}
             alt={value ? "Selected image" : "Default image"}
             className="h-20 w-28 rounded-lg object-cover"
           />
@@ -69,7 +97,7 @@ export const ImageDropzone = ({
               Drag and drop an image here
             </p>
             <p className="text-xs text-slate-500">
-              PNG or JPG. The default image appears if you skip this.
+              PNG or JPG. The image uploads to Firebase Storage.
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -77,16 +105,21 @@ export const ImageDropzone = ({
               type="button"
               size="sm"
               variant="outline"
+              disabled={isUploading}
               onClick={() => fileInputRef.current?.click()}
             >
-              Upload
+              {isUploading ? "Uploading..." : "Upload"}
             </Button>
             {value && (
               <Button
                 type="button"
                 size="sm"
                 variant="ghost"
-                onClick={() => onChange("")}
+                disabled={isUploading}
+                onClick={() => {
+                  setPreviewUrl(null);
+                  onChange("");
+                }}
               >
                 Clear
               </Button>
@@ -96,13 +129,16 @@ export const ImageDropzone = ({
         {helperText && (
           <p className="mt-2 text-xs text-slate-500">{helperText}</p>
         )}
+        {uploadError && (
+          <p className="mt-2 text-xs text-red-600">{uploadError}</p>
+        )}
       </div>
       <input
         ref={fileInputRef}
         type="file"
         accept="image/*"
         className="hidden"
-        onChange={(event) => handleFile(event.target.files?.[0])}
+        onChange={(event) => void handleFile(event.target.files?.[0])}
       />
     </div>
   );

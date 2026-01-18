@@ -6,7 +6,7 @@ import { Input } from "../../components/ui/input";
 import { Textarea } from "../../components/ui/textarea";
 import { ImageDropzone } from "../../components/ui/image-dropzone";
 import { RichTextEditor } from "../../components/ui/rich-text-editor";
-import { Modal } from "../../components/ui/modal";
+import { Modal, ModalFooter } from "../../components/ui/modal";
 import {
   Card,
   CardContent,
@@ -15,9 +15,10 @@ import {
   CardTitle
 } from "../../components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../../components/ui/tabs";
+import { signInAnonymously, signOut } from "firebase/auth";
 import type { Article, Employee, GalleryImage, Podcast } from "../../lib/types";
-import { resetCMSData } from "../../lib/cms-data";
 import { getAdminSession, setAdminSession, verifyCredentials } from "../../lib/admin-auth";
+import { auth } from "../../lib/firebase";
 import { useCMSData } from "../../lib/use-cms";
 import { getImageUrl } from "../../lib/utils";
 
@@ -79,7 +80,11 @@ export default function AdminPage() {
   const isReady = useMemo(() => Boolean(data), [data]);
 
   useEffect(() => {
-    setIsAuthed(getAdminSession());
+    const authed = getAdminSession();
+    setIsAuthed(authed);
+    if (authed && !auth.currentUser) {
+      void signInAnonymously(auth);
+    }
   }, []);
 
   if (!data) {
@@ -118,15 +123,21 @@ export default function AdminPage() {
               <p className="text-sm text-red-600">{loginError}</p>
             )}
             <Button
-              onClick={() => {
+              onClick={async () => {
                 const ok = verifyCredentials(loginUsername, loginPassword);
                 if (!ok) {
                   setLoginError("Невалиден потребител или парола.");
                   return;
                 }
-                setLoginError("");
-                setAdminSession(true);
-                setIsAuthed(true);
+                try {
+                  await signInAnonymously(auth);
+                  setLoginError("");
+                  setAdminSession(true);
+                  setIsAuthed(true);
+                } catch (error) {
+                  console.error(error);
+                  setLoginError("Firebase auth failed. Check your settings.");
+                }
               }}
             >
               Sign in
@@ -232,18 +243,15 @@ export default function AdminPage() {
         </div>
         <div className="flex flex-wrap gap-2">
           <Button
-            variant="outline"
-            onClick={async () => {
-              await resetCMSData();
-            }}
-          >
-            Reset to defaults
-          </Button>
-          <Button
             variant="ghost"
-            onClick={() => {
+            onClick={async () => {
               setAdminSession(false);
               setIsAuthed(false);
+              try {
+                await signOut(auth);
+              } catch (error) {
+                console.error(error);
+              }
             }}
           >
             Log out
@@ -594,6 +602,7 @@ export default function AdminPage() {
           <ImageDropzone
             label="Снимка към статията"
             value={articleForm.image}
+            storagePath="articles"
             onChange={(next) =>
               setArticleForm({
                 ...articleForm,
@@ -601,20 +610,22 @@ export default function AdminPage() {
               })
             }
           />
-          <div className="flex flex-wrap gap-2">
-            <Button onClick={handleArticleSubmit}>
-              {articleForm.id ? "Save changes" : "Publish"}
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => {
-                setArticleForm(emptyArticle);
-                setShowArticleForm(false);
-              }}
-            >
-              Close
-            </Button>
-          </div>
+          <ModalFooter>
+            <div className="flex flex-wrap gap-2">
+              <Button onClick={handleArticleSubmit}>
+                {articleForm.id ? "Save changes" : "Publish"}
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setArticleForm(emptyArticle);
+                  setShowArticleForm(false);
+                }}
+              >
+                Close
+              </Button>
+            </div>
+          </ModalFooter>
         </div>
       </Modal>
 
@@ -681,20 +692,22 @@ export default function AdminPage() {
               })
             }
           />
-          <div className="flex flex-wrap gap-2">
-            <Button onClick={handlePodcastSubmit}>
-              {podcastForm.id ? "Save changes" : "Publish"}
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => {
-                setPodcastForm(emptyPodcast);
-                setShowPodcastForm(false);
-              }}
-            >
-              Close
-            </Button>
-          </div>
+          <ModalFooter>
+            <div className="flex flex-wrap gap-2">
+              <Button onClick={handlePodcastSubmit}>
+                {podcastForm.id ? "Save changes" : "Publish"}
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setPodcastForm(emptyPodcast);
+                  setShowPodcastForm(false);
+                }}
+              >
+                Close
+              </Button>
+            </div>
+          </ModalFooter>
         </div>
       </Modal>
 
@@ -718,22 +731,25 @@ export default function AdminPage() {
           <ImageDropzone
             label="Снимка за галерията"
             value={imageForm.url}
+            storagePath="gallery"
             onChange={(next) => setImageForm({ ...imageForm, url: next })}
           />
-          <div className="flex flex-wrap gap-2">
-            <Button onClick={handleImageSubmit}>
-              {imageForm.id ? "Save changes" : "Add"}
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => {
-                setImageForm(emptyImage);
-                setShowImageForm(false);
-              }}
-            >
-              Close
-            </Button>
-          </div>
+          <ModalFooter>
+            <div className="flex flex-wrap gap-2">
+              <Button onClick={handleImageSubmit}>
+                {imageForm.id ? "Save changes" : "Add"}
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setImageForm(emptyImage);
+                  setShowImageForm(false);
+                }}
+              >
+                Close
+              </Button>
+            </div>
+          </ModalFooter>
         </div>
       </Modal>
 
@@ -780,6 +796,7 @@ export default function AdminPage() {
           <ImageDropzone
             label="Снимка на човека"
             value={employeeForm.image}
+            storagePath="employees"
             onChange={(next) =>
               setEmployeeForm({
                 ...employeeForm,
@@ -787,20 +804,22 @@ export default function AdminPage() {
               })
             }
           />
-          <div className="flex flex-wrap gap-2">
-            <Button onClick={handleEmployeeSubmit}>
-              {employeeForm.id ? "Save changes" : "Add"}
-            </Button>
-            <Button
-              variant="ghost"
-              onClick={() => {
-                setEmployeeForm(emptyEmployee);
-                setShowEmployeeForm(false);
-              }}
-            >
-              Close
-            </Button>
-          </div>
+          <ModalFooter>
+            <div className="flex flex-wrap gap-2">
+              <Button onClick={handleEmployeeSubmit}>
+                {employeeForm.id ? "Save changes" : "Add"}
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setEmployeeForm(emptyEmployee);
+                  setShowEmployeeForm(false);
+                }}
+              >
+                Close
+              </Button>
+            </div>
+          </ModalFooter>
         </div>
       </Modal>
     </div>
